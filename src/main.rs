@@ -1,4 +1,32 @@
-println!("Hello Git?")
+use std::error::Error;
+
+mod graph;
+mod pagerank;
+mod bfs;
+
+fn main() -> Result<(), Box<dyn Error>> {
+    let path = "git_edges.csv";
+    let adjacency_list = graph::make_graph(path)?; //creating directed graph
+    
+    //get pagerank scores
+    let num_vertex = 10000;
+    let pagerank_scores = pagerank::pagerank(&adjacency_list, num_vertex);
+    let pagerank_vec: Vec<_> = pagerank_scores.iter().collect();
+    
+    //print first 5 pageranks
+    //for (vertex, score) in pagerank_vec.iter().take(5) {
+      //  println!("Vertex: {}, PageRank: {}", vertex, score);
+    //}
+    
+    let bfs_order = bfs::bfs(1, &adjacency_list);
+    println!("bfs order is {:?}", bfs_order);
+    
+    Ok(())
+}
+
+
+
+
 
 //Fn make_directed_graph () -> give directed graph of all developers as nodes
 
