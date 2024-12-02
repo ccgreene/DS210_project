@@ -19,7 +19,9 @@ fn main() -> Result<(), Box<dyn Error>> {
     //}
     
     let bfs_order = bfs::bfs(1, &adjacency_list);
-    println!("bfs order is {:?}", bfs_order);
+    
+    
+    //prompt for user1, user2
     
     Ok(())
 }

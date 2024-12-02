@@ -27,3 +27,8 @@ pub fn bfs(start_vertex: i32, adj_list: &HashMap<i32, Vec<i32>>) -> Vec<i32>  { 
     traversal_order //return
 }
 
+//fn find_social_circles(adjacency_list: &HashMap<i32, Vec<i32>>) -> Vec<Vec<i32>> 
+
+//dfs??
+
+//degrees of separtaion, 
