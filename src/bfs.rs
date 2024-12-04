@@ -1,4 +1,3 @@
-use rand::Rng; //importing rand, for genrating rando numbers
 use std::collections::VecDeque; //improting vecqdeu
 use std::collections::HashMap;
 use std::collections::HashSet;
@@ -17,7 +16,7 @@ pub fn bfs(start_vertex: i32, adj_list: &HashMap<i32, Vec<i32>>) -> Vec<i32>  { 
         if let Some(neighbors) = adj_list.get(&current_vertex) {
             for &neighbor in neighbors {
                 if !visited.contains(&neighbor) {
-                        visited.insert(neighbor);
+                    visited.insert(neighbor);
                     queue.push_back(neighbor);
                 }
             }
@@ -27,8 +26,4 @@ pub fn bfs(start_vertex: i32, adj_list: &HashMap<i32, Vec<i32>>) -> Vec<i32>  { 
     traversal_order //return
 }
 
-//fn find_social_circles(adjacency_list: &HashMap<i32, Vec<i32>>) -> Vec<Vec<i32>> 
 
-//dfs??
-
-//degrees of separtaion, 

@@ -1,6 +1,5 @@
 use std::collections::HashMap;
 use std::error::Error;
-
 use csv::ReaderBuilder;
 
 //Initializing the graph by using an adajancy list
