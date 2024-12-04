@@ -7,7 +7,7 @@ pub fn add_edge(adjacency_list: &mut HashMap<i32, Vec<i32>>, start: i32, end: i3
     adjacency_list.entry(start).or_insert_with(Vec::new).push(end); //add end
 }
 
-pub fn make_graph(path: &str) -> Result<HashMap<i32, Vec<i32>>, Box<dyn Error>> {
+pub fn make_graph(path: &str) -> Result<HashMap<i32, Vec<i32>>, Box<dyn Error>> { //making directed graph
     let mut reader = ReaderBuilder::new()
         .has_headers(true)
         .from_path(path)?;
