@@ -71,13 +71,13 @@ pub fn most_accurate_walk_count(adjacency_list: &HashMap<i32, Vec<i32>>, num_ver
             return num_walks;
         }
 
-        prev_pagerank = current_pagerank.clone(); // Update previous Pr
+        prev_pagerank = current_pagerank.clone(); //update previous Pr
         
         iteration += 1;
         println!("iteration: {}, number of walks: {}", iteration, num_walks);
     }
 
-    max_walks // If no convergence, return the maximum walks used
+    max_walks //If no convergence return the maximum walks used
 }
 
 
