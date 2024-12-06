@@ -47,20 +47,20 @@ pub fn pagerank(adjacency_list: &HashMap<i32, Vec<i32>>, num_vertices: i32, num_
 //takes a pagerank adj list and a step, and then returns the most accurate number of walks
 fn has_converged(pr_current: &Array1<f64>, pr_previous: &Array1<f64>, tolerance: f64) -> bool { //finding the dif between two pageranks of prev and current 
     let diff = pr_current - pr_previous;
-    let norm = diff.mapv(|x| x.powi(2)).sum().sqrt(); //finds euc
-    norm < tolerance
+    let euc = diff.mapv(|x| x.powi(2)).sum().sqrt(); //finds euc
+    euc < tolerance
 }
 
 
 pub fn most_accurate_walk_count(adjacency_list: &HashMap<i32, Vec<i32>>, num_vertices: i32, max_walks: i32, tolerance: f64, walk_length: i32) -> i32 {
-    let initial_num_walks = 1;
-    let initial_walk_length = 1;
+    let initial_num_walks = 1; // just need an arbitrary pagerank to start with, these initial values don't actuallly make sense but that doesnt matter because its all beign updated
+    let initial_walk_length = 1; 
     
     let mut prev_pagerank = pagerank(adjacency_list, num_vertices, initial_num_walks, initial_walk_length); // HashMap<i32, f64> 
     let mut iteration = 0;
     let step = 10;
 
-    for num_walks in (300..=max_walks).step_by(step) { //starting at 300 to spare you the run time
+    for num_walks in (350..=max_walks).step_by(step) { //starting at 350 to spare you the run time
         let current_pagerank = pagerank(adjacency_list, num_vertices, num_walks, walk_length); //HashMap<i32, f64> 
 
         // Compare with previous to check for convergence

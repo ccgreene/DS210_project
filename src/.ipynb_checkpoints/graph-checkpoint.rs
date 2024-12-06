@@ -3,7 +3,7 @@ use std::error::Error;
 use csv::ReaderBuilder;
 
 //Initializing the graph by using an adajancy list
-pub fn add_edge(adjacency_list: &mut HashMap<i32, Vec<i32>>, start: i32, end: i32) { //adding edge to hash
+fn add_edge(adjacency_list: &mut HashMap<i32, Vec<i32>>, start: i32, end: i32) { //adding edge to hash
     adjacency_list.entry(start).or_insert_with(Vec::new).push(end); //add end
 }
 

@@ -47,8 +47,8 @@ pub fn pagerank(adjacency_list: &HashMap<i32, Vec<i32>>, num_vertices: i32, num_
 //takes a pagerank adj list and a step, and then returns the most accurate number of walks
 fn has_converged(pr_current: &Array1<f64>, pr_previous: &Array1<f64>, tolerance: f64) -> bool { //finding the dif between two pageranks of prev and current 
     let diff = pr_current - pr_previous;
-    let norm = diff.mapv(|x| x.powi(2)).sum().sqrt(); //finds euc
-    norm < tolerance
+    let euc = diff.mapv(|x| x.powi(2)).sum().sqrt(); //finds euc
+    euc < tolerance
 }
 
 
@@ -71,15 +71,14 @@ pub fn most_accurate_walk_count(adjacency_list: &HashMap<i32, Vec<i32>>, num_ver
             return num_walks;
         }
 
-        prev_pagerank = current_pagerank.clone(); // Update previous Pr
+        prev_pagerank = current_pagerank.clone(); //update previous Pr
         
         iteration += 1;
         println!("iteration: {}, number of walks: {}", iteration, num_walks);
     }
 
-    max_walks // If no convergence, return the maximum walks used
+    max_walks //If no convergence return the maximum walks used
 }
-
 
 
 pub fn add_edge(adjacency_list: &mut HashMap<i32, Vec<i32>>, start: i32, end: i32) { //adding edge to hash
