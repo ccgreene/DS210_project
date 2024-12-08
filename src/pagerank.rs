@@ -90,7 +90,7 @@ pub fn add_edge(adjacency_list: &mut HashMap<i32, Vec<i32>>, start: i32, end: i3
 
 #[test]
 
-fn test_termination_counts() {
+fn test_termination_counts() { //test for pagerank
     let mut adj_list_test = HashMap::new(); //make hash with edges manually
     add_edge(&mut adj_list_test, 0, 1);
     add_edge(&mut adj_list_test, 0, 2);
