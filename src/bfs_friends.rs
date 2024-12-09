@@ -58,19 +58,70 @@ pub fn find_common_friends(adj_list: &HashMap<i32, Vec<i32>>, user1: i32, user2:
 }
 
 pub fn find_social_circles(adjacency_list: &HashMap<i32, Vec<i32>>) -> HashMap<i32, Vec<i32>> {
-    let mut visited = HashSet::new(); // Use HashSet for faster lookups
-    let mut iteration = 0;
+    let mut visited = HashSet::new(); //Hashset for faster lookups
     let mut circle_hash = HashMap::new();
 
     for &node in adjacency_list.keys() {
-        if !visited.contains(&node) {
-            let social_circle = bfs(adjacency_list, node, &mut visited); // Perform BFS to find the social circle
-            iteration += 1;
-            
-            // Insert the social circle into the HashMap with the iteration number as the key
-            circle_hash.insert(iteration, social_circle);
+        if !visited.contains(&node) { //if unvisited node then do bfs and find circle
+            let social_circle = bfs(adjacency_list, node, &mut visited);
+            //use first node of the circle as the key
+            circle_hash.insert(node, social_circle);
         }
     }
 
-    circle_hash // Return the HashMap containing social circles
+    circle_hash //return the HashMap with social circles
+}
+
+
+#[cfg(test)]
+
+#[test]
+fn test_find_common_friends() {
+    let mut adj_list: HashMap<i32, Vec<i32>> = HashMap::new();
+
+    adj_list.insert(1, vec![2, 3]);
+    adj_list.insert(2, vec![1, 3]);
+    adj_list.insert(3, vec![2, 4, 1]);
+    adj_list.insert(4, vec![1]);
+    
+    let common_friends = find_common_friends(&adj_list, 1, 2); //user 1 and 2 have only friend 3 in common
+    assert_eq!(common_friends, HashSet::from([3]));
+    
+    let common_friends = find_common_friends(&adj_list, 1, 4); //user 1 and user 4 have no friends in common
+    assert_eq!(common_friends, HashSet::new());
+
+}
+
+#[test]
+fn test_find_social_circles() {
+    let mut adj_list: HashMap<i32, Vec<i32>> = HashMap::new();
+        
+    // Three social circles: [1, 2, 3], [4, 5], [6]
+    adj_list.insert(1, vec![2, 3]); 
+    adj_list.insert(2, vec![1, 3]); 
+    adj_list.insert(3, vec![1, 2]);  
+    adj_list.insert(4, vec![5]);    
+    adj_list.insert(5, vec![4]);   
+    adj_list.insert(6, vec![]);  // 6 has no friends
+        
+    let circles = find_social_circles(&adj_list);
+        
+    assert_eq!(circles.len(), 3); // Make sure it has the correct number of circles
+
+    for (key, circle) in &circles {
+        // Check that the key corresponds to the correct circle members
+        if *key == 1 {
+            //circle [1, 2, 3]
+            assert!(circle.contains(&1));
+            assert!(circle.contains(&2));
+            assert!(circle.contains(&3));
+        } else if *key == 4 {
+            //circle [4, 5]
+            assert!(circle.contains(&4));
+            assert!(circle.contains(&5));
+        } else if *key == 6 {
+            //circle [6]
+            assert!(circle.contains(&6));
+        }
+    }
 }

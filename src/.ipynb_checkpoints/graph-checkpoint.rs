@@ -3,7 +3,7 @@ use std::error::Error;
 use csv::ReaderBuilder;
 
 //Initializing the graph by using an adajancy list
-fn add_edge(adjacency_list: &mut HashMap<i32, Vec<i32>>, start: i32, end: i32) { //adding edge to hash
+pub fn add_edge(adjacency_list: &mut HashMap<i32, Vec<i32>>, start: i32, end: i32) { //adding edge to hash
     adjacency_list.entry(start).or_insert_with(Vec::new).push(end); //add end
 }
 
@@ -22,12 +22,34 @@ pub fn make_graph(path: &str) -> Result<HashMap<i32, Vec<i32>>, Box<dyn Error>> 
     for result in reader.records() {
         let record = result?; //Parse each row
         
-        //if there is both id1 and id2, add to adj list
+        //if there is both id1 and id2, add to adj list corressonding to id1
         if let (Some(start), Some(end)) = (record.get(id_1_index), record.get(id_2_index)) {
             if let (Ok(start), Ok(end)) = (start.parse::<i32>(), end.parse::<i32>()) {
                 add_edge(&mut adj_list, start, end);
             }
         }
     }
-    Ok(adj_list)
+    Ok(adj_list) //return adj list
 }
+
+#[cfg(test)]
+
+#[test]
+
+fn test_add_edge() {
+    let mut adj_list: HashMap<i32, Vec<i32>> = HashMap::new();
+
+    add_edge(&mut adj_list, 1, 2);
+    add_edge(&mut adj_list, 1, 3);
+    add_edge(&mut adj_list, 2, 3);
+
+    let expected_adj_list: HashMap<i32, Vec<i32>> = vec![
+        (1, vec![2, 3]),
+        (2, vec![3]),
+    ]
+    .into_iter()
+    .collect();
+
+    assert_eq!(adj_list, expected_adj_list);
+}
+

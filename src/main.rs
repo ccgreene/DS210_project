@@ -17,17 +17,17 @@ fn main() -> Result<(), Box<dyn Error>> {
     let num_vertices = 37700; // number of nodes in data set - 1
     
     //getting best number of steps
-    let max_walks = 15000;
-    let tolerance = 1e-2;
-    let walk_length = 100;
+    let max_walks = 5000;
+    let tolerance = 1e-3;
+    let walk_length = 120;
     
-    println!("\nThe following is the most_accurate_walk_count iterating... This will take around 10 minutes :) ");
+    println!("\nThe following is the most_accurate_walk_count iterating... This will take around six minutes and thirty seconds :) ");
     let num_walks = pagerank::most_accurate_walk_count(&adjacency_list, num_vertices, max_walks, tolerance, walk_length);
     println!("the ideal number of walks is {}", num_walks);
     
     
     //printing 5 pageranks
-    println!("\nThis is the pagerank of the 25 most connected verticies.");
+    println!("\nThis is the pagerank of the 25 most connected verticies. It will take a few minutes...");
     let pagerank_scores = pagerank::pagerank(&adjacency_list, num_vertices, num_walks, walk_length);
     let mut top_25_pagerank_vec: Vec<_> = pagerank_scores.iter().collect();
     top_25_pagerank_vec.sort_by(|a, b| b.1.partial_cmp(a.1).unwrap()); // Sort by Pagercaank score descending
@@ -58,8 +58,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 
     let circles_vec: Vec<_> = social_circles.iter().collect();
     
+    println!("10 random circles look like:");
     for (circle_number, circle_user_tuple) in circles_vec.iter().take(10) {
-        println!("10 random circles look like:");
         println!("circle id: {} users: {:?}", circle_number, circle_user_tuple);
     }
 
@@ -69,7 +69,7 @@ fn main() -> Result<(), Box<dyn Error>> {
     let mut hundred_five_hundred = 0;
     let mut five_hundred_plus = 0;
 
-    for (circle_number, circle_user_tuple) in circles_vec.iter().enumerate() {
+    for (_, circle_user_tuple) in circles_vec.iter().enumerate() {
         let (_circle_id, circle_users) = circle_user_tuple;
 
         if circle_users.len() < 10 {
@@ -117,8 +117,8 @@ fn main() -> Result<(), Box<dyn Error>> {
                 (i as u32, x)  // The X is the category index, Y is the count
             })),
     )?;
-    
 
+    
     Ok(())
     
 }
