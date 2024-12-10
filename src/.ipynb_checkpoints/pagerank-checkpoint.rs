@@ -46,14 +46,14 @@ pub fn pagerank(adjacency_list: &HashMap<i32, Vec<i32>>, num_vertices: i32, num_
 
 
 pub fn most_accurate_walk_count(adjacency_list: &HashMap<i32, Vec<i32>>, num_vertices: i32, max_walks: i32, tolerance: f64, walk_length: i32) -> i32 {
-    let initial_num_walks = 1; 
-    let initial_walk_length = 1; 
+    let initial_num_walks = 10; 
+    let initial_walk_length = 10; 
     
     let mut prev_pagerank = pagerank(adjacency_list, num_vertices, initial_num_walks, initial_walk_length); // Initial PageRank
     let mut iteration = 0;
     let step = 10;
 
-    for num_walks in (275..=max_walks).step_by(step) { // Start from 275 to reduce runtime
+    for num_walks in (10..=max_walks).step_by(step) { // Start from 200 to reduce runtime
         let current_pagerank = pagerank(adjacency_list, num_vertices, num_walks, walk_length); // Current pagerank
 
         // compute the difference between previous and current pagerank
@@ -138,11 +138,11 @@ fn test_pagerank() {
         let tolerance = 1e-2; 
         let walk_length = 10; 
 
-        let accurate_walks = most_accurate_walk_count(&adjacency_list, num_vertices, max_walks, tolerance, walk_length);
+        let num_walks = most_accurate_walk_count(&adjacency_list, num_vertices, max_walks, tolerance, walk_length);
 
-        assert!(accurate_walks <= max_walks, "Accurate walks exceed max_walks"); //verfiy that it returns a valid number less than the max
-        assert!(accurate_walks >= 275, "Accurate walks less than the initial walk count");
+        assert!(num_walks <= max_walks, "Accurate walks exceed max_walks"); //verfiy that it returns a valid number less than the max
+        assert!(num_walks >= 10, "Accurate walks less than the initial walk count");
 
-        println!("Most accurate walk count: {}", accurate_walks);
+        println!("Most accurate walk count: {}", num_walks);
     }
 
